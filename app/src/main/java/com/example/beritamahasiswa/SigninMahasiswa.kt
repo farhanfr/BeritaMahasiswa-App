@@ -1,9 +1,11 @@
 package com.example.beritamahasiswa
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.beritamahasiswa.preferences.SharedPreference
@@ -39,6 +41,11 @@ class SigninMahasiswa : AppCompatActivity(){
     }
 
     private fun login_mahasiswa(mahasiswaNim: String, mahasiswaPassword: String) {
+        val progressdialog = ProgressDialog(this)
+        progressdialog.setMessage("Login ....")
+        progressdialog.setCancelable(false)
+        progressdialog.show()
+
         val sharedPreference:SharedPreference=SharedPreference(this)
         val apiService = RetrofitServer.buildService(ApiService::class.java)
         val requestCall = apiService.login_mahasiswa(mahasiswaNim,mahasiswaPassword)
@@ -51,9 +58,9 @@ class SigninMahasiswa : AppCompatActivity(){
                     Log.d("Server",response.body()!!.msg)
                     responseData.forEach {
                         sharedPreference.save("mahasiswa_id",it.mahasiswa_id!!)
-                        sharedPreference.save("mahasiswa_name",it.mahasiswa_nim!!)
+                        sharedPreference.save("mahasiswa_nim",it.mahasiswa_nim!!)
+                        sharedPreference.save("mahasiswa_name",it.mahasiswa_name!!)
                         sharedPreference.save("status",true)
-
                     }
                     startActivity(Intent(this@SigninMahasiswa,HomeMahasiswa::class.java))
                     finish()
@@ -62,6 +69,7 @@ class SigninMahasiswa : AppCompatActivity(){
                 else{
                     Log.d("Server",response.body()!!.msg)
                     Toast.makeText(applicationContext,"Username atau password salah",Toast.LENGTH_SHORT).show()
+                    progressdialog.hide()
                 }
             }
 

@@ -13,13 +13,11 @@ class HomeMahasiswa : AppCompatActivity() {
 
         val sharedPref:SharedPreference= SharedPreference(this)
 
-        et_coba.setText(sharedPref.getValueInt("mahasiswa_id").toString())
+        et_mahasiswaName.setText(sharedPref.getValueString("mahasiswa_name"))
+        et_mahasiswaNim.setText(sharedPref.getValueString("mahasiswa_nim"))
 
-
-        btn_logout.setOnClickListener {
-            sharedPref.clearSharedPrefrences()
-            startActivity(Intent(this,SigninMahasiswa::class.java))
-            finish()
+        cv_news.setOnClickListener {
+            startActivity(Intent(this,NewsMahasiswa::class.java))
         }
     }
 }

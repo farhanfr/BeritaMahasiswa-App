@@ -29,6 +29,7 @@
         android:hint="Masukkan nim anda"
         android:textColor="#FFFFFF"
         android:textColorHint="#FFFFFF"
+        android:inputType="number"
         app:backgroundTint="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
